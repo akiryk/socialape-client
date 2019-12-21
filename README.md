@@ -1,68 +1,90 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Social App Firebase Tutorial: Client Section
 
-## Available Scripts
+A tutorial about using firebase and react to create a social app. See [videos from CodeCamp](https://www.youtube.com/watch?v=-vo7cu0xP4I&list=PLMhAeHCz8S38ryyeMiBPPUnFAiWnoPvWP&index=2).
 
-In the project directory, you can run:
+## Setup
 
-### `yarn start`
+```sh
+cd Documents/projects/socialape-functions/functions
+nvm use 8.13.0
+npm install -g firebase-tools
+firebase serve
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It also works with v11.6.
+_Note that if you use a different version of Node, you may need to reinstall firebase tools_
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Test the REST API with Postman
 
-### `yarn test`
+### Get the test url
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- After running `firebase serve`, you will get a message in the console like `http function initialized (http://localhost:5000/simplereactapp-bed9b/us-east1/api)`.
+- Use the url it provides, e.g. http://localhost:5000/simplereactapp-bed9b/us-east1/api
 
-### `yarn build`
+### Log in
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Open Postman and use POST
+- paste in the path to screams login endpoint: `path/to/api/login`
+- Enter credentials using BODY and raw/JSON
+- Gotchas: use JSON not "Text"; use POST not GET; no trailing comma after last entry
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```json
+{
+  "email": "name@test.com",
+  "password": "password"
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### To do anything that requires login
 
-### `yarn eject`
+- Start by logging in, above.
+- This should return a token. Copy it to clipboard
+- Open the Authorization tab and select Type: Bearer Token.
+- Paste the copied token into the token input. It should not display as a temporary header in the Headers tab.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Get all screams
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Login and add credentials to header, as above.
+- Open Postman and use GET
+- paste in the path to screams endpoint: `path/to/api/screams`
+- Remove the body of request for GET (it may work locally, but not after deployment)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Post a new scream
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Login and add credentials to header, as above.
+- Open Postman and use POST
+- paste in the path to screa endpoint: `path/to/api/scream`
+- Add a new scream using BODY and raw/JSON:
 
-## Learn More
+```json
+{
+  "body": "My new scream"
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Add a comment to a scream works
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Login and add credentials to header, as above.
+- Open Postman and use POST
+- paste in the path to scream/comment endpoint: `path/to/api/scream/SOMESCREAMID/comment`
+-
 
-### Code Splitting
+```json
+{
+  "body": "My comment on this scream"
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- Add like works (use GET)
+  `path/to/api/scream/SOMESCREAMID/like`
+  No need for body
 
-### Analyzing the Bundle Size
+- Unlike comment works (use GET)
+  `path/to/api/scream/SOMESCREAMID/like`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- Delete scream works (use DELETE)
+  `path/to/api/scream/SOMESCREAMID/`
+  No need for word `delete` and no need for body
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Watched through video 13, completed the Firebase section.
+Onto the React section [video 14](https://www.youtube.com/watch?v=uu43m1SpbTA&list=PLMhAeHCz8S38ryyeMiBPPUnFAiWnoPvWP&index=14)
