@@ -5,10 +5,14 @@ import home from './components/pages/home';
 import login from './components/pages/login';
 import signup from './components/pages/signup';
 import NavBar from './components/navbar';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import createTheme from '@material-ui/core/styles/createMuiTheme';
+import themeObject from './util/theme';
 
+const theme = createTheme(themeObject);
 function App() {
   return (
-    <div className="App">
+    <MuiThemeProvider theme={theme}>
       <Router>
         <NavBar />
         <div className="container">
@@ -19,7 +23,7 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </div>
+    </MuiThemeProvider>
   );
 }
 
