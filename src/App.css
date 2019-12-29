@@ -16,3 +16,8 @@ code {
 .container {
   margin: 80px 32px;
 }
+
+.parker {
+  width: 100px;
+  height: 100px;
+}

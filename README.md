@@ -13,3 +13,7 @@ npm start
 
 Watched through video 14, completed the Firebase section.
 Onto the React section [video 15](https://www.youtube.com/watch?v=uu43m1SpbTA&list=PLMhAeHCz8S38ryyeMiBPPUnFAiWnoPvWP&index=15)
+
+## Endpoints
+
+See package.json, where we set `proxy`
